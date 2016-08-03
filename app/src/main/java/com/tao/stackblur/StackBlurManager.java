@@ -115,6 +115,7 @@ public class StackBlurManager {
 	}
 
 	public void onDestory(){
-		_blurProcess.onDestory();
+		if (_blurProcess != null)
+			_blurProcess.onDestory();
 	}
 }
