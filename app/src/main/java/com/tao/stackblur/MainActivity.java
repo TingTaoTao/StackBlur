@@ -85,4 +85,11 @@ public class MainActivity extends AppCompatActivity {
         }
         return bitmap;
     }
+
+    @Override
+    protected void onDestroy() {
+        if (stackBlurManager != null)
+            stackBlurManager.onDestory();
+        super.onDestroy();
+    }
 }

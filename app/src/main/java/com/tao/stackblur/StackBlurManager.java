@@ -37,7 +37,6 @@ public class StackBlurManager {
 	static final int EXECUTOR_THREADS = Runtime.getRuntime().availableProcessors();
 	static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(EXECUTOR_THREADS);
 
-	private static volatile boolean hasRS = true;
 
 	/**
 	 * 原始图像
@@ -76,7 +75,7 @@ public class StackBlurManager {
 
 	/**
 	 * 返回作为位图的模糊图像
-	 * @return blurred image
+	 * @return 模糊图像
 	 */
 	public Bitmap returnBlurredImage() {
 		return _result;
@@ -84,7 +83,7 @@ public class StackBlurManager {
 
 	/**
 	 * 将图像保存到文件系统中
-	 * @param path The path where to save the image
+	 * @param path 保存图像的路径
 	 */
 	public void saveIntoFile(String path) {
 		try {
@@ -97,7 +96,7 @@ public class StackBlurManager {
 
 	/**
 	 * 返回原始图像作为位图
-	 * @return the original bitmap image
+	 * @return 原始位图图像
 	 */
 	public Bitmap getImage() {
 		return this._image;
@@ -115,4 +114,7 @@ public class StackBlurManager {
 		return _result;
 	}
 
+	public void onDestory(){
+		_blurProcess.onDestory();
+	}
 }
