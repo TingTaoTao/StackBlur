@@ -102,6 +102,11 @@ class JavaBlurProcess implements BlurProcess {
 		return Bitmap.createBitmap(currentPixels, w, h, Bitmap.Config.ARGB_8888);
 	}
 
+	@Override
+	public void onDestory() {
+
+	}
+
 	private static void blurIteration(int[] src, int w, int h, int radius, int cores, int core, int step) {
 		int x, y, xp, yp, i;
 		int sp;

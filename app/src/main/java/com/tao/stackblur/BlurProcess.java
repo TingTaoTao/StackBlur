@@ -11,4 +11,9 @@ interface BlurProcess {
 	 * @return the blurred version of the image.
 	 */
     public Bitmap blur(Bitmap original, float radius);
+
+	/**
+	 * Frees allocated resources
+	 */
+	public void onDestory();
 }
