@@ -4,17 +4,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/id_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="第一种方式显示模糊图片" />
+        <Button
+            android:id="@+id/id_button_02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="第二种方式显示模糊图片" />
+
+    </LinearLayout>
 
     <Button
-        android:id="@+id/id_button"
+        android:id="@+id/id_button_03"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="显示模糊图片" />
-
+        android:text="第三种方式显示模糊图片" />
 
     <ImageView
         android:id="@+id/id_imageview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@mipmap/android_platform_256"/>
+        android:src="@mipmap/dayu"/>
 </LinearLayout>

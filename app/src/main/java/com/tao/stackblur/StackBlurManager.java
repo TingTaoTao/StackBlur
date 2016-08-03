@@ -23,59 +23,59 @@
  * @license: Apache License 2.0
  */
 
-
 package com.tao.stackblur;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-//import android.support.v8.renderscript.RSRuntimeException;
-import android.util.Log;
-
 import java.io.FileOutputStream;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class StackBlurManager {
+	static Context _context;
+
 	static final int EXECUTOR_THREADS = Runtime.getRuntime().availableProcessors();
 	static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(EXECUTOR_THREADS);
 
 	private static volatile boolean hasRS = true;
 
 	/**
-	 * Original image
+	 * 原始图像
 	 */
 	private final Bitmap _image;
 
 	/**
-	 * Most recent result of blurring
+	 * 最近的结果的模糊
 	 */
 	private Bitmap _result;
 
 	/**
-	 * Method of blurring
+	 * 模糊方式
 	 */
-	private final BlurProcess _blurProcess;
+	private BlurProcess _blurProcess;
 
 	/**
-	 * Constructor method (basic initialization and construction of the pixel array)
-	 * @param image The image that will be analyed
+	 * 构造函数方法（基本初始化和像素数组的构造）
+	 * @param context 上下文
+	 * @param image 图像将被分析
 	 */
-	public StackBlurManager(Bitmap image) {
+	public StackBlurManager(Context context, Bitmap image) {
+		_context = context.getApplicationContext();
 		_image = image;
-		_blurProcess = new JavaBlurProcess();
 	}
 
 	/**
-	 * Process the image on the given radius. Radius must be at least 1
+	 * 处理给定半径上的图像。半径必须至少1
 	 * @param radius
 	 */
 	public Bitmap process(int radius) {
+		_blurProcess = new JavaBlurProcess();
 		_result = _blurProcess.blur(_image, radius);
 		return _result;
 	}
 
 	/**
-	 * Returns the blurred image as a bitmap
+	 * 返回作为位图的模糊图像
 	 * @return blurred image
 	 */
 	public Bitmap returnBlurredImage() {
@@ -83,7 +83,7 @@ public class StackBlurManager {
 	}
 
 	/**
-	 * Save the image into the file system
+	 * 将图像保存到文件系统中
 	 * @param path The path where to save the image
 	 */
 	public void saveIntoFile(String path) {
@@ -96,48 +96,23 @@ public class StackBlurManager {
 	}
 
 	/**
-	 * Returns the original image as a bitmap
+	 * 返回原始图像作为位图
 	 * @return the original bitmap image
 	 */
 	public Bitmap getImage() {
 		return this._image;
 	}
 
-//	/**
-//	 * Process the image using a native library
-//	 */
-//	public Bitmap processNatively(int radius) {
-//		NativeBlurProcess blur = new NativeBlurProcess();
-//		_result = blur.blur(_image, radius);
-//		return _result;
-//	}
-//
-//	/**
-//	 * Process the image using renderscript if possible
-//	 * Fall back to native if renderscript is not available
-//	 * @param context renderscript requires an android context
-//	 * @param radius
-//	 */
-//	public Bitmap processRenderScript(Context context, float radius) {
-//		BlurProcess blurProcess;
-//		// The renderscript support library doesn't have .so files for ARMv6.
-//		// Remember if there is an error creating the renderscript context,
-//		// and fall back to NativeBlurProcess
-//		if(hasRS) {
-//			try {
-//				blurProcess = new RSBlurProcess(context);
-//			} catch (RSRuntimeException e) {
-//				if(BuildConfig.DEBUG) {
-//					Log.i("StackBlurManager", "Falling back to Native Blur", e);
-//				}
-//				blurProcess = new NativeBlurProcess();
-//				hasRS = false;
-//			}
-//		}
-//		else {
-//			blurProcess = new NativeBlurProcess();
-//		}
-//		_result = blurProcess.blur(_image, radius);
-//		return _result;
-//	}
+
+	/**
+	 *
+	 * @param radius 最大模糊度(在0.0到25.0之间)
+     * @return
+     */
+	public Bitmap processRenderScript(float radius) {
+		_blurProcess = new RenderScriptBlur(_context);
+		_result = _blurProcess.blur(_image,radius);
+		return _result;
+	}
+
 }
