@@ -40,15 +40,6 @@ public class MainActivity extends AppCompatActivity {
 //        stackBlurManager = new StackBlurManager(getBitmapFromAsset(this, "android_platform_256.png"));
         stackBlurManager = new StackBlurManager(this,BitmapFactory.decodeResource(getResources(), R.mipmap.dayu));
 
-        //第二种方式 (该方法有点问题，可以参考一下。如果想用可看看另外两种方式)
-//        blurAlgorithm = new StackBlur(true);
-//        if (mBlurBitmap != null) {
-////            mBlurBitmap = blurAlgorithm.blur(getBitmapFromAsset(this, "android_platform_256.png"), 10);
-//            mBlurBitmap = blurAlgorithm.blur(BitmapFactory.decodeResource(getResources(),
-//                    R.mipmap.dayu),10);
-//        }
-
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
