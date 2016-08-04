@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //第二种方式 (该方法在部分机型上有点问题，可以参考一下。如果想用可看看另外两种方式)
                 blurAlgorithm = new StackBlur(true);
-                imageView.setImageBitmap(blurAlgorithm.blur(BitmapFactory.decodeResource(getResources(),
+                if (blurAlgorithm != null)
+                    imageView.setImageBitmap(blurAlgorithm.blur(BitmapFactory.decodeResource(getResources(),
                         R.mipmap.dayu),10));
             }
         });
